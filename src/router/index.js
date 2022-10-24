@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import UserBoard from '@/components/UserBoard'
 import Admin from '@/components/Admin'
+import About from '@/components/About'
 
 Vue.use(Router)
 
@@ -29,6 +30,14 @@ let router = new Router({
       path: '/register',
       name: 'register',
       component: Register,
+      meta: { 
+        guest: true
+      }
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
       meta: { 
         guest: true
       }

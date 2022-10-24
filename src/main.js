@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Axios from 'axios'
+import 'materialize-css/dist/js/materialize.min.js'
+import 'devextreme/dist/css/dx.light.css';
 
 Vue.prototype.$http = Axios;
 
