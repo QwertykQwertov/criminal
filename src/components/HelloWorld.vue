@@ -1,7 +1,5 @@
 <template>
   <div class="hello">
-    <h1>This is homepage</h1>
-    <h2>{{msg}}</h2>
   </div>
 </template>
 
@@ -25,9 +23,15 @@
   }
   li {
     display: inline-block;
-    margin: 0 10px;
+    /* margin: 0 10px; */
   }
   a {
     color: #42b983;
+  }
+  .hello{
+    height: 150vh;
+    background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.8) ),url(../assets/femida.jpg);
+    background-position: top;
+    background-size: 100%;
   }
 </style>

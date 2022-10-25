@@ -28,5 +28,9 @@
   </script>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
-    @import 'materialize-css/dist/css/materialize.min.css'
+    @import 'materialize-css/dist/css/materialize.min.css';
+    .nav-wrapper{
+      background: linear-gradient(to right,#50381a, #141111) !important;
+    }
+    /* #443837  #483218 */
   </style>

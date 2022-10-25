@@ -11,13 +11,17 @@
         <div class="dx-field">
           <div class="dx-field-label">Имя:</div>
           <div class="dx-field-value">
-            <DxTextBox :show-clear-button="true" placeholder="Введите имя" />
+            <DxTextBox
+              v-model="name"
+              :value="name" :show-clear-button="true" placeholder="Введите имя" />
           </div>
         </div>
         <div class="dx-field">
           <div class="dx-field-label">Фамилия:</div>
           <div class="dx-field-value">
             <DxTextBox
+              v-model="last_name"
+              :value="last_name"
               :show-clear-button="true"
               placeholder="Введите фамилию"
             />
@@ -87,6 +91,7 @@
           :use-submit-behavior="true"
           text="Продолжить"
           type="success"
+          @click="validation($event)"
         />
       </div>
     </div>
@@ -176,15 +181,21 @@ export default {
   data() {
     return {
       name: "",
+      last_name:"",
       email: "",
       password: "",
       password_confirmation: "",
       is_admin: null
     };
+  },created(){
+    document.title = 'Суды - Регистрация'
   },
   methods: {
     passwordComparison() {
       return this.password;
+    },
+    validation(e){
+      console.log(e)
     },
     asyncValidation(params) {
         return sendRequest(params.value);

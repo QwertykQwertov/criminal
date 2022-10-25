@@ -11,7 +11,9 @@
         return {
           msg: 'artydev & co'
         }
-      }
+      },created(){
+    document.title = 'Суды - О проекте'
+  },
     }
   </script>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
