@@ -3,6 +3,7 @@
     <div class="nav-wrapper">
       <a href="" @click="$router.push('/')" class="brand-logo" style="left:5%">artydev & co</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="" @click="$router.push('/policy')">Политика конфиденциальности</a></li>
         <li><a href="" @click="$router.push('/about')">О проекте</a></li>
         <li><a href="" @click="$router.push('/login')">Войти</a></li>
         <li><a href="" @click="$router.push('/register')">Регистрация</a></li>

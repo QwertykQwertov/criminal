@@ -1,6 +1,6 @@
 <template>
   <div style="display:flex; justify-content: center; margin-top:5%;">
-    <div class="form" style="width:60%; border: 8px solid #f5f5f5">
+    <div class="form ki_form">
       <h3
         style='color:rgb(94 94 94);    font-family: "Helvetica Neue","Segoe UI",helvetica,verdana,sans-serif;'
       >
@@ -252,5 +252,10 @@ export default {
 }
 ​ #button {
   display: block;
+}
+.ki_form{
+  width:60% !important; 
+  border: 8px solid #f5f5f5;
+  background: rgb(255 255 255 / 60%);
 }
 </style>
