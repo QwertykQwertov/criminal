@@ -6,6 +6,7 @@ import Register from '@/components/Register'
 import UserBoard from '@/components/UserBoard'
 import Admin from '@/components/Admin'
 import About from '@/components/About'
+import Policy from '@/components/Policy'
 
 Vue.use(Router)
 
@@ -48,6 +49,14 @@ let router = new Router({
       component: UserBoard,
       meta: { 
         requiresAuth: true
+      }
+    },
+    {
+      path: '/policy',
+      name: 'policy',
+      component: Policy,
+      meta: { 
+        guest: true
       }
     },
     {
