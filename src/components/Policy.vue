@@ -155,7 +155,9 @@ export default {
     return {
       msg: 'The commoners'
     }
-  }
+  },created(){
+    document.title = 'Суды - Политика конфиденциальности'
+  },
 }
   </script>
   <<style scoped>
