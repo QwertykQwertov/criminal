@@ -7,6 +7,7 @@ import Axios from 'axios'
 import 'materialize-css/dist/js/materialize.min.js'
 import 'devextreme/dist/css/dx.light.css';
 
+
 Vue.prototype.$http = Axios;
 
 Vue.config.productionTip = false

@@ -24,6 +24,7 @@ const allowCrossDomain = function(req, res, next) {
 app.use(allowCrossDomain)
 
 router.post('/register', function(req, res) {
+  console.log(req,"request")
     db.insert([
       req.body.name,
       req.body.email,
