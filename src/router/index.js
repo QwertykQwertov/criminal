@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Login from '@/components/Login'
-import Register from '@/components/Register'
-import UserBoard from '@/components/UserBoard'
-import Admin from '@/components/Admin'
-import About from '@/components/About'
-import Policy from '@/components/Policy'
+import Home from '@/pages/Home'
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
+import Cabinet from '@/pages/Cabinet'
+import Admin from '@/pages/Admin'
+import About from '@/pages/About'
+import Policy from '@/pages/Policy'
 
 Vue.use(Router)
 
@@ -16,8 +16,8 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Home',
+      component: Home
     },
     {
       path: '/login',
@@ -44,11 +44,11 @@ let router = new Router({
       }
     },
     {
-      path: '/dashboard',
-      name: 'userboard',
-      component: UserBoard,
+      path: '/cabinet',
+      name: 'cabinet',
+      component: Cabinet,
       meta: { 
-        requiresAuth: true
+        // requiresAuth: true
       }
     },
     {
