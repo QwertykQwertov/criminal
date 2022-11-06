@@ -2,6 +2,7 @@ import DataSource from "devextreme/data/data_source";
 
 const store = {
   showPopUp: false,
+  showAccount: false,
   historyQueries: new DataSource({
     key: "fio",
     load() {

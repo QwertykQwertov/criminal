@@ -1,6 +1,6 @@
 <template>
-  <div style="display:flex; justify-content: center; margin-top:5%;">
-    <div class="form ki_form">
+  <div class="form-wrapper">
+    <div class="form ki-form">
       <h3
         style='color:rgb(94 94 94);    font-family: "Helvetica Neue","Segoe UI",helvetica,verdana,sans-serif;'
       >
@@ -42,7 +42,6 @@
             </DxTextBox>
           </div>
         </div>
-       
       </div>
       <div class="dx-fieldset">
         <DxValidationSummary id="summary" />
@@ -111,8 +110,9 @@ export default {
       email: "",
       password: ""
     };
-  },created(){
-    document.title = 'Суды - Вход'
+  },
+  created() {
+    document.title = "Суды - Вход";
   },
   methods: {
     handleSubmit(e) {
@@ -149,10 +149,17 @@ export default {
 };
 </script>
 <style scoped>
-.ki_form{
-  width:60% !important; 
+.ki-form {
+  width: 60% !important;
   border: 8px solid #f5f5f5;
   background: rgb(255 255 255 / 60%);
+  text-align: center;
+}
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  margin-bottom: 20%;
 }
 /* #443837  #483218 */
 </style>

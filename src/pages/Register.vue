@@ -1,6 +1,6 @@
 <template>
-  <div style="display:flex; justify-content: center; margin-top:5%;">
-    <div class="form ki_form">
+  <div class="form-wrapper">
+    <div class="form ki-form">
       <h3
         style='color:rgb(94 94 94);    font-family: "Helvetica Neue","Segoe UI",helvetica,verdana,sans-serif;'
       >
@@ -13,7 +13,10 @@
           <div class="dx-field-value">
             <DxTextBox
               v-model="name"
-              :value="name" :show-clear-button="true" placeholder="Введите имя" />
+              :value="name"
+              :show-clear-button="true"
+              placeholder="Введите имя"
+            />
           </div>
         </div>
         <div class="dx-field">
@@ -93,49 +96,11 @@
           type="success"
           @click="validation($event)"
         />
+        <p style="    color: #333;
+    font-weight: 400;
+    font-size: 14px;">Нажимая кнопку "Продолжить" вы соглашаетесь с <a class="a-policy" @click="$router.push('/policy')">политикой конфиденциальности</a></p>
       </div>
     </div>
-    <!-- <h4>Register</h4>
-    <form>
-      <label for="name">Name</label>
-      <div>
-        <input id="name" type="text" v-model="name" required autofocus />
-      </div>
-
-      <label for="email">E-Mail Address</label>
-      <div>
-        <input id="email" type="email" v-model="email" required />
-      </div>
-
-      <label for="password">Password</label>
-      <div>
-        <input id="password" type="password" v-model="password" required />
-      </div>
-
-      <label for="password-confirm">Confirm Password</label>
-      <div>
-        <input
-          id="password-confirm"
-          type="password"
-          v-model="password_confirmation"
-          required
-        />
-      </div>
-
-      <label for="password-confirm">Is this an administrator account?</label>
-      <div>
-        <select v-model="is_admin">
-          <option value="1">Yes</option>
-          <option value="0">No</option>
-        </select>
-      </div>
-
-      <div>
-        <button type="submit" @click="handleSubmit">
-          Register
-        </button>
-      </div>
-    </form> -->
   </div>
 </template>
 <script>
@@ -155,8 +120,8 @@ import {
 
 // Заглушка на email
 const sendRequest = function(value) {
-  const invalidEmail = 'test@dx-email.com';
-  return new Promise((resolve) => {
+  const invalidEmail = "test@dx-email.com";
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(value !== invalidEmail);
     }, 1000);
@@ -181,24 +146,25 @@ export default {
   data() {
     return {
       name: "",
-      last_name:"",
+      last_name: "",
       email: "",
       password: "",
       password_confirmation: "",
       is_admin: null
     };
-  },created(){
-    document.title = 'Суды - Регистрация'
+  },
+  created() {
+    document.title = "Суды - Регистрация";
   },
   methods: {
     passwordComparison() {
       return this.password;
     },
-    validation(e){
-      console.log(e)
+    validation(e) {
+      console.log(e);
     },
     asyncValidation(params) {
-        return sendRequest(params.value);
+      return sendRequest(params.value);
     },
     handleSubmit(e) {
       e.preventDefault();
@@ -253,9 +219,23 @@ export default {
 ​ #button {
   display: block;
 }
-.ki_form{
-  width:60% !important; 
+.ki-form {
+  width: 60% !important;
   border: 8px solid #f5f5f5;
   background: rgb(255 255 255 / 60%);
+  text-align: center;
+}
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  margin-bottom: 8%;
+}
+.a-policy{
+  text-decoration: underline;
+  box-sizing: border-box;
+}
+.a-policy:hover{
+  color: #666
 }
 </style>
