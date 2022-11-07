@@ -2,35 +2,61 @@
   <div class="">
     <nav>
       <div class="nav-wrapper">
-        <a @click="$router.push('/')" class="brand-logo"
-          ><i class="large material-icons">account_balance</i>Сервис проверки
-          судимостей</a
+        <a
+          @click="$router.push('/')"
+          class="brand-logo"
+        ><i class="large material-icons">account_balance</i>Сервис проверки
+          судимостей</a>
+        <a
+          href="#"
+          data-target="mobile-demo"
+          class="sidenav-trigger"
+        ><i class="material-icons">menu</i></a>
+        <ul
+          id="nav-mobile"
+          class="right hide-on-med-and-down"
         >
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
-          ><i class="material-icons">menu</i></a
-        >
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li>
             <a @click="$router.push('/policy')">Политика конфиденциальности</a>
           </li>
           <li><a @click="$router.push('/about')">О проекте</a></li>
-          <li><a @click="showAccount">Профиль</a></li>
-          <li><a @click="$router.push('/cabinet')">Кабинет</a></li>
-          <li><a @click="$router.push('/login')">Войти</a></li>
-          <li><a @click="$router.push('/register')">Регистрация</a></li>
+          <template v-if="store.authorization">
+            <li><a @click="showAccount">Профиль</a></li>
+            <li><a @click="$router.push('/cabinet')">Кабинет</a></li>
+          </template>
+          <template v-else>
+            <li><a @click="$router.push('/login')">Войти</a></li>
+            <li><a @click="$router.push('/register')">Регистрация</a></li>
+          </template>
         </ul>
       </div>
     </nav>
     <!-- Mobile menu -->
-    <ul ref="mobile-menu" class="sidenav sidenav-mobile" id="mobile-demo">
+    <ul
+      ref="mobile-menu"
+      class="sidenav sidenav-mobile"
+      id="mobile-demo"
+    >
       <li>
-        <a @click="$router.push('/policy')" class="sidenav-close">Политика конфиденциальности</a>
+        <a
+          @click="$router.push('/policy')"
+          class="sidenav-close"
+        >Политика конфиденциальности</a>
       </li>
-      <li><a @click="$router.push('/about')" class="sidenav-close">О проекте</a></li>
-      <li><a @click="$router.push('/login')" class="sidenav-close">Войти</a></li>
-      <li><a @click="$router.push('/register')" class="sidenav-close">Регистрация</a></li>
+      <li><a
+          @click="$router.push('/about')"
+          class="sidenav-close"
+        >О проекте</a></li>
+      <li><a
+          @click="$router.push('/login')"
+          class="sidenav-close"
+        >Войти</a></li>
+      <li><a
+          @click="$router.push('/register')"
+          class="sidenav-close"
+        >Регистрация</a></li>
     </ul>
-    <ModalAccount/>
+    <ModalAccount />
   </div>
 </template>
 
@@ -43,23 +69,23 @@ export default {
     DxButton,
     ModalAccount,
   },
-  data() {
+  data () {
     return {
       store,
     };
   },
-  created() {
+  created () {
     this.$nextTick(() => {
       const mobileBar = this.$refs["mobile-menu"];
       M.Sidenav.init(mobileBar);
     });
   },
   methods: {
-    registrations() {
+    registrations () {
       this.$router.push("/register");
     },
-   showAccount() {
-    this.store.showAccount = true
+    showAccount () {
+      this.store.showAccount = true
     }
   }
 };

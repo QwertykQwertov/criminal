@@ -9,7 +9,10 @@
     title="Судебные дела"
     @hiding="onHiding"
   >
-    <DxScrollView width="100%" height="100%">
+    <DxScrollView
+      width="100%"
+      height="100%"
+    >
       <DxDataGrid
         ref="grid"
         :data-source="store.selectQuery"
@@ -18,37 +21,58 @@
         :focused-row-enabled="true"
         @selection-changed="selectionChanged"
       >
-        <DxColumn data-field="data" caption="Дата" data-type="date" />
-        <DxColumn data-field="applicant" caption="Истец" data-type="string" />
+        <DxColumn
+          data-field="data"
+          caption="Дата"
+          data-type="date"
+        />
+        <DxColumn
+          data-field="applicant"
+          caption="Истец"
+          data-type="string"
+        />
         <DxColumn
           data-field="defendant"
           caption="Ответчик"
           data-type="string"
         />
-        <DxColumn data-field="law" caption="law" data-type="string" />
+        <DxColumn
+          data-field="law"
+          caption="Судья"
+          data-type="string"
+        />
         <DxColumn
           data-field="category"
           caption="Категория"
           data-type="string"
         />
-        <DxColumn data-field="result" caption="Результат" data-type="string" />
+        <DxColumn
+          data-field="result"
+          caption="Результат"
+          data-type="string"
+        />
 
-        <DxMasterDetail :enabled="true" template="detailTemplate" />
-        <template #detailTemplate="{ data: employee }">
-          <div class="employee-info">
-            <p class="employee-notes"><b>Дата:</b> {{ employee.data.data }}</p>
-            <p class="employee-notes">
-              <b>Истец:</b> {{ employee.data.applicant }}
+        <DxMasterDetail
+          :enabled="true"
+          template="detailTemplate"
+        />
+        <template #detailTemplate="{ data: report }">
+          <div class="detail-wrapper">
+            <p><b>Дата:</b> {{ report.data.data.slice(0,10) }}</p>
+            <p>
+              <b>Истец:</b> {{ report.data.applicant }}
             </p>
-            <p class="employee-notes">
-              <b>Ответичк:</b> {{ employee.data.defendant }}
+            <p>
+              <b>Ответичк:</b> {{ report.data.defendant }}
             </p>
-            <p class="employee-notes"><b>law:</b> {{ employee.data.law }}</p>
-            <p class="employee-notes">
-              <b>Категория:</b> {{ employee.data.category }}
+            <p><b>Судья:</b> {{ report.data.law }}</p>
+            <!-- <template style="max-width: 50px"> -->
+            <p>
+              <b>Категория:</b> {{ report.data.category }}
             </p>
-            <p class="employee-notes">
-              <b>Результат:</b> {{ employee.data.result }}
+            <!-- </template> -->
+            <p>
+              <b>Результат:</b> {{ report.data.result }}
             </p>
           </div>
         </template>
@@ -82,7 +106,7 @@ export default {
     DxMasterDetail,
     DxScrollView
   },
-  data() {
+  data () {
     return {
       store
     };
@@ -91,7 +115,7 @@ export default {
     // closeOutside(e) {
     //   this.store.showPopUp = false;
     // },
-    onHiding() {
+    onHiding () {
       this.store.showPopUp = false;
     },
     // contentReady(e) {
@@ -99,12 +123,16 @@ export default {
     //     e.component.selectRowsByIndexes(0);
     //   }
     // },
-    selectionChanged(e) {
+    selectionChanged (e) {
       e.component.collapseAll(-1);
       e.component.expandRow(e.currentSelectedRowKeys[0]);
-    }
+    },
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+.detail-wrapper p {
+  white-space: normal;
+}
+</style>
