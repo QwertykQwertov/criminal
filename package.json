@@ -17,6 +17,7 @@
     "devextreme": "22.1.6",
     "devextreme-vue": "22.1.6",
     "jsonwebtoken": "^8.5.1",
+    "jspdf": "^2.5.1",
     "materialize-css": "^1.0.0-rc.2",
     "sqlite3": "^5.1.2",
     "vue": "^2.5.2",
