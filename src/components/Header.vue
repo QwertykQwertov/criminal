@@ -3,7 +3,7 @@
     <nav>
       <div class="nav-wrapper">
         <a
-          @click="$router.push('/')"
+          @click="changeLocation('/')"
           class="brand-logo"
         ><i class="large material-icons">account_balance</i>Сервис проверки
           судимостей</a>
@@ -17,16 +17,16 @@
           class="right hide-on-med-and-down"
         >
           <li>
-            <a @click="$router.push('/policy')">Политика конфиденциальности</a>
+            <a @click="changeLocation('/policy')">Политика конфиденциальности</a>
           </li>
-          <li><a @click="$router.push('/about')">О проекте</a></li>
+          <li><a @click="changeLocation('/about')">О проекте</a></li>
           <template v-if="store.authorization">
             <li><a @click="showAccount">Профиль</a></li>
-            <li><a @click="$router.push('/cabinet')">Кабинет</a></li>
+            <li><a @click="changeLocation('/cabinet')">Кабинет</a></li>
           </template>
           <template v-else>
-            <li><a @click="$router.push('/login')">Войти</a></li>
-            <li><a @click="$router.push('/register')">Регистрация</a></li>
+            <li><a @click="changeLocation('/login')">Войти</a></li>
+            <li><a @click="changeLocation('/register')">Регистрация</a></li>
           </template>
         </ul>
       </div>
@@ -39,20 +39,20 @@
     >
       <li>
         <a
-          @click="$router.push('/policy')"
+          @click="changeLocation('/policy')"
           class="sidenav-close"
         >Политика конфиденциальности</a>
       </li>
       <li><a
-          @click="$router.push('/about')"
+          @click="changeLocation('/about')"
           class="sidenav-close"
         >О проекте</a></li>
       <li><a
-          @click="$router.push('/login')"
+          @click="changeLocation('/login')"
           class="sidenav-close"
         >Войти</a></li>
       <li><a
-          @click="$router.push('/register')"
+          @click="changeLocation('/register')"
           class="sidenav-close"
         >Регистрация</a></li>
     </ul>
@@ -81,11 +81,12 @@ export default {
     });
   },
   methods: {
-    registrations () {
-      this.$router.push("/register");
-    },
     showAccount () {
-      this.store.showAccount = true
+      this.$emit('openMenu')
+      // this.store.openState = true
+    },
+    changeLocation (route) {
+      if (this.$router.currentRoute.path != route) this.$router.push(route)
     }
   }
 };
@@ -93,6 +94,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "materialize-css/dist/css/materialize.min.css";
+.brand-logo {
+  cursor: pointer;
+}
+a {
+  transition: 0.5s linear !important;
+}
+a:hover {
+  color: #c2783b;
+  transition: 0.3s linear;
+}
 .nav-wrapper .brand-logo {
   font-size: 1.5rem;
 }

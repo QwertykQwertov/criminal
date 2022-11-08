@@ -7,6 +7,7 @@ import Cabinet from '@/pages/Cabinet'
 import Admin from '@/pages/Admin'
 import About from '@/pages/About'
 import Policy from '@/pages/Policy'
+import NotFound from '@/pages/NotFound'
 
 Vue.use(Router)
 
@@ -14,6 +15,10 @@ Vue.use(Router)
 let router = new Router({
   mode: 'history',
   routes: [
+    {
+      path: '*',
+      component: NotFound
+    },
     {
       path: '/',
       name: 'Home',

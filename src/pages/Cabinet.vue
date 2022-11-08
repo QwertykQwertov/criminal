@@ -1,9 +1,7 @@
 <template>
   <div class="main-div">
     <div class="form ki_form">
-      <h3
-        style='color:rgb(94 94 94);    font-family: "Helvetica Neue","Segoe UI",helvetica,verdana,sans-serif;'
-      >
+      <h3>
         Получение информации
       </h3>
       <hr style="border: 1px solid #f5f5f5;" />
@@ -111,14 +109,14 @@ export default {
   },
   created() {
     this.$nextTick(() => {
-      // console.log(this.testData);
+      // console.log(this.store.historyQueries1.load());
     });
   },
   methods: {
     openPopUp(e) {
       if (e.data.status === "Готово") {
         this.store.selectQuery = new DataSource({
-          key: "data",
+          key: "id",
           load() {
             return e.data.data;
           }
