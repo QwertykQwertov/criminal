@@ -62,8 +62,8 @@
               :search-enabled="true"
               :data-source="store.regions"
               search-mode="contains"
-              search-expr="court_name"
-              display-expr="court_name"
+              search-expr="area"
+              display-expr="area"
               value-expr="tag"
               placeholder="Выберите регион для поиска"
             >
@@ -170,7 +170,7 @@ export default {
     };
   },
   created () {
-    return fetch('http://94.228.115.6:5000/api/v1/courts')
+    return fetch('http://94.228.115.6:5000/api/v1/courts_mapping')
       .then((response) => {
         return response.json();
       })
