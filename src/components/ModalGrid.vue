@@ -9,7 +9,10 @@
     title="Судебные дела"
     @hiding="onHiding"
   >
-    <DxScrollView width="100%" height="100%">
+    <DxScrollView
+      width="100%"
+      height="100%"
+    >
       <DxDataGrid
         ref="grid"
         :data-source="store.selectQuery"
@@ -19,32 +22,52 @@
         @selection-changed="selectionChanged"
         @exporting="onExporting"
       >
-        <DxColumn data-field="data" caption="Дата" data-type="date" />
-        <DxColumn data-field="applicant" caption="Истец" data-type="string" />
+        <DxColumn
+          data-field="case_number"
+          caption="№ дела"
+          data-type="string"
+        />
+        <DxColumn
+          data-field="receipt_dt"
+          caption="Дата поступления"
+          data-type="date"
+          format="dd.MM.yyyy"
+        />
+        <DxColumn
+          data-field="applicant"
+          caption="Истец"
+          data-type="string"
+        />
         <DxColumn
           data-field="defendant"
           caption="Ответчик"
           data-type="string"
         />
-        <DxColumn data-field="law" caption="Судья" data-type="string" />
         <DxColumn
-          data-field="category"
-          caption="Категория"
+          data-field="judge"
+          caption="Судья"
           data-type="string"
         />
-        <DxColumn data-field="result" caption="Результат" data-type="string" />
+        <DxColumn
+          data-field="solution"
+          caption="Результат"
+          data-type="string"
+        />
 
-        <DxMasterDetail :enabled="true" template="detailTemplate" />
+        <DxMasterDetail
+          :enabled="true"
+          template="detailTemplate"
+        />
         <template #detailTemplate="{ data: report }">
           <div class="detail-wrapper">
-            <p><b>Дата:</b> {{ report.data.data.slice(0, 10) }}</p>
+            <p><b>№ дела:</b> {{ report.data.case_number }}</p>
+            <p><b>Дата поступления:</b> {{ formatDate(report.data.receipt_dt)}}</p>
             <p><b>Истец:</b> {{ report.data.applicant }}</p>
             <p><b>Ответичк:</b> {{ report.data.defendant }}</p>
-            <p><b>Судья:</b> {{ report.data.law }}</p>
-            <!-- <template style="max-width: 50px"> -->
-            <p><b>Категория:</b> {{ report.data.category }}</p>
-            <!-- </template> -->
-            <p><b>Результат:</b> {{ report.data.result }}</p>
+            <p><b>Судья:</b> {{ report.data.judge }}</p>
+            <p><b>Дата решения:</b> {{ formatDate(report.data.decision_dt) }}</p>
+            <p><b>Результат:</b> {{ report.data.solution }}</p>
+            <p><b>Дата вступления в законную силу:</b> {{ formatDate(report.data.entry_dt) }}</p>
           </div>
         </template>
         <DxExport
@@ -87,20 +110,27 @@ export default {
     DxScrollView,
     DxExport
   },
-  data() {
+  data () {
     return {
       store,
       // font
     };
   },
-  created(){
+  created () {
     // this.$nextTick(()=> console.log(font))
   },
   methods: {
+    formatDate (date) {
+      if (date) {
+        date = date.slice(0, 10)
+        return date.split("-").reverse().join(".")
+      }
+      return ""
+    },
     // closeOutside(e) {
     //   this.store.showPopUp = false;
     // },
-    onHiding() {
+    onHiding () {
       this.store.showPopUp = false;
     },
     // contentReady(e) {
@@ -108,11 +138,11 @@ export default {
     //     e.component.selectRowsByIndexes(0);
     //   }
     // },
-    selectionChanged(e) {
+    selectionChanged (e) {
       e.component.collapseAll(-1);
       e.component.expandRow(e.currentSelectedRowKeys[0]);
     },
-    onExporting(e) {
+    onExporting (e) {
       const doc = new jsPDF();
 
       doc.addFileToVFS("PTSans-Regular-normal.ttf", font);
@@ -134,7 +164,8 @@ export default {
 .detail-wrapper p {
   white-space: normal;
 }
-.dx-datagrid-nowrap, .dx-datagrid-nowrap .dx-header-row>td {
-    white-space: normal !important;
+.dx-datagrid-nowrap,
+.dx-datagrid-nowrap .dx-header-row > td {
+  white-space: normal !important;
 }
 </style>

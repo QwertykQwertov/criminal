@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <Header @openMenu="openLeftMenu" />
+    <Header @openMenu="openLeftMenu" @closeMenu="closeLeftMenu"/>
     <DxDrawer
       ref="leftMenu"
       opened-state-mode="overlap"
       position="right"
       reveal-mode="slide"
-      v-model="store.openState"
-      :opened="store.openState"
       :close-on-outside-click="true"
       template="listMenu"
     >
       <template #listMenu>
-        <NavigationList />
+        <NavigationList @close="closeLeftMenu"/>
       </template>
-      <div id="content">
-        <router-view />
-      </div>
+
+        <div id="content">
+          <router-view />
+
+        </div>
     </DxDrawer>
     <Footer />
   </div>
@@ -47,6 +47,9 @@ export default {
     openLeftMenu () {
       this.$refs.leftMenu.$_instance.show()
       // console.log()
+    },
+    closeLeftMenu(){
+      this.$refs.leftMenu.$_instance.hide()
     }
   }
 }
@@ -74,7 +77,8 @@ body {
   color: rgb(94 94 94);
   font-family: "Helvetica Neue", "Segoe UI", helvetica, verdana, sans-serif;
 }
-.dx-drawer-overlap.dx-drawer-left .dx-drawer-wrapper, .dx-drawer-overlap.dx-drawer-right .dx-drawer-wrapper {
-    overflow-y:hidden;
+.dx-drawer-overlap.dx-drawer-left .dx-drawer-wrapper,
+.dx-drawer-overlap.dx-drawer-right .dx-drawer-wrapper {
+  overflow-y: hidden;
 }
 </style>

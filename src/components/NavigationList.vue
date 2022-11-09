@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{width: leftWidth}"
-    style=" background-color: rgb(76 57 31 / 70%); padding-top:10% height:100%"
+    style=" background-color: rgb(76 57 31 / 70%); padding-top:10% height:100%;"
   >
     <div class="wrapper-list">
       <p class="list-item"><i class="dx-icon-group" />&nbsp&nbsp&nbsp{{store.user.fname + ' ' + store.user.lname}}</p>
@@ -13,21 +13,23 @@
       <p class="list-item"><i class="dx-icon-money" />&nbsp&nbsp&nbsp{{'Баланс: ' + store.user.balance + ' ₽'}}</p>
     </div>
     <div class="wrapper-list">
-      <p class="list-item">Пополнить баланс</p>
+      <p class="list-item"><i class="dx-icon-add" />&nbsp&nbsp&nbspПополнить баланс</p>
+    </div>
+    <div @click="changeLocation('/cabinet')" class="wrapper-list">
+      <p class="list-item"><i class="dx-icon-product" />&nbsp&nbsp&nbspВ кабинет</p>
     </div>
     <div class="wrapper-list">
-      <p class="list-item">В кабинет</p>
+      <p class="list-item"><i class="dx-icon-rename" />&nbsp&nbsp&nbspСменить пароль</p>
     </div>
     <div class="wrapper-list">
-      <p class="list-item">Сменить пароль</p>
+      <p class="list-item"><i class="dx-icon-info" />&nbsp&nbsp&nbspСообщить об ошибке</p>
     </div>
-    <div class="wrapper-list">
-      <p class="list-item">Написать в техподдержку</p>
+    <div
+      @click="logout"
+      class="wrapper-list"
+    >
+      <p class="list-item"><i class="dx-icon-runner" />&nbsp&nbsp&nbspВыйти</p>
     </div>
-        <div class="wrapper-list">
-      <p class="list-item">Выйти</p>
-    </div>
-    <a>asfdasfd</a>
   </div>
 </template>
 <script>
@@ -41,41 +43,27 @@ export default {
   data () {
     return {
       store,
-      cap: [{}],
     };
   },
   computed: {
-    user () {
-      return [
-        { id: 1, text: this.store.user.fname + ' ' + this.store.user.lname, icon: 'dx-icon-group', },
-        { id: 2, text: this.store.user.email, icon: 'dx-icon-email', },
-        { id: 5, text: 'Баланс: ' + this.store.user.balance + ' ₽', icon: 'dx-icon-money', },]
-    },
-    navigation () {
-      if (this.store.authorization) {
-        return [
-          { id: 1, text: 'Политика конфиденциальности', value: '/policy' },
-          { id: 2, text: 'О проекте', value: '/about', },
-          { id: 5, text: 'Кабинет', value: '/cabinet', },
-        ]
-      } else {
-        return [
-          { id: 1, text: 'Политика конфиденциальности', value: '/policy', },
-          { id: 2, text: 'О проекте', value: '/about', },
-          { id: 3, text: 'Вход', value: '/login', },
-          { id: 4, text: 'Регистрация', value: '/register', },
-        ]
-      }
-    },
     leftWidth () {
-      console.log(window.innerWidth)
       return window.innerWidth * 0.25 + 'px'
     }
   },
   methods: {
     changeLocation (route) {
-      if (this.$router.currentRoute.path != route) this.$router.push(route)
+      if (this.$router.currentRoute.path != route) this.$router.push(route)      
+      this.$emit('close')
     },
+    logout () {
+      this.store.user = {}
+      this.store.authorization = false
+      this.$router.push("/login")
+      this.closeMenu()
+    },
+    closeMenu(){
+      this.$emit('close')
+    }
   }
 };
 </script>
@@ -102,7 +90,7 @@ p i {
 }
 .wrapper-list:hover {
   background-color: #3d2e1b;
-  transition: .4s linear
+  transition: 0.4s linear;
 }
 .list-item {
   overflow: hidden;

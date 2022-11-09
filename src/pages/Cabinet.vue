@@ -2,24 +2,75 @@
   <div class="main-div">
     <div class="form ki_form">
       <h3>
-        Получение информации
+        Получение информации по ФИО и региону
       </h3>
       <hr style="border: 1px solid #f5f5f5;" />
       <div class="dx-fieldset">
         <div class="dx-field">
-          <div class="dx-field-label">ФИО:</div>
+          <div class="dx-field-label">Фамилия:</div>
           <div class="dx-field-value">
             <DxTextBox
-              v-model="name"
-              :value="name"
+              v-model="lname"
+              :value="lname"
               :show-clear-button="true"
               :hover-state-enabled="false"
-              placeholder="Введите ФИО для запроса"
+              placeholder="Введите фамилию для запроса"
             >
               <DxValidator>
-                <DxRequiredRule message="Поле обязательно для заполнения" />
+                <DxRequiredRule message="Фамилия обязательна для заполнения" />
               </DxValidator>
             </DxTextBox>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Имя:</div>
+          <div class="dx-field-value">
+            <DxTextBox
+              v-model="fname"
+              :value="fname"
+              :show-clear-button="true"
+              :hover-state-enabled="false"
+              placeholder="Введите имя для запроса"
+            >
+              <DxValidator>
+                <DxRequiredRule message="Имя обязательно для заполнения" />
+              </DxValidator>
+            </DxTextBox>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Отчество:</div>
+          <div class="dx-field-value">
+            <DxTextBox
+              v-model="fatherName"
+              :value="fatherName"
+              :show-clear-button="true"
+              :hover-state-enabled="false"
+              placeholder="Введите отчество для запроса"
+            >
+              <DxValidator>
+                <DxRequiredRule message="Отчество обязательно для заполнения" />
+              </DxValidator>
+            </DxTextBox>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Регион:</div>
+          <div class="dx-field-value">
+            <DxSelectBox
+              v-model="region"
+              :search-enabled="true"
+              :data-source="store.regions"
+              search-mode="contains"
+              search-expr="court_name"
+              display-expr="court_name"
+              value-expr="tag"
+              placeholder="Выберите регион для поиска"
+            >
+              <DxValidator>
+                <DxRequiredRule message="Регион обязателен для заполнения" />
+              </DxValidator>
+            </DxSelectBox>
           </div>
         </div>
       </div>
@@ -43,15 +94,31 @@
       :show-borders="true"
       :focused-row-enabled="true"
       style="margin: 5%"
-      @rowDblClick="openPopUp($event)"
+      @rowDblClick="checkOnComplete($event)"
     >
-      <DxColumn data-field="fio" caption="ФИО" data-type="string" />
-      <DxColumn data-field="region" caption="Регион" data-type="string" />
-      <DxColumn data-field="status" caption="Статус" data-type="string" />
+      <DxColumn
+        data-field="fio"
+        caption="ФИО"
+        data-type="string"
+      />
+      <DxColumn
+        data-field="region"
+        caption="Регион"
+        data-type="string"
+      />
+      <DxColumn
+        data-field="status"
+        caption="Статус"
+        data-type="string"
+      />
       <DxSorting mode="multiple" />
     </DxDataGrid>
     <ModalGrid />
-    <DxToast :visible="isVisible" :message="message" :type="type" />
+    <DxToast
+      :visible="isVisible"
+      :message="message"
+      :type="type"
+    />
   </div>
 </template>
 <script>
@@ -72,23 +139,14 @@ import DxValidationSummary from "devextreme-vue/validation-summary";
 import {
   DxValidator,
   DxRequiredRule,
-  DxCompareRule,
-  DxPatternRule,
-  DxStringLengthRule,
-  DxRangeRule,
-  DxAsyncRule
 } from "devextreme-vue/validator";
+import { DxSelectBox } from 'devextreme-vue/select-box';
 
 export default {
   components: {
     DxTextBox,
     DxValidator,
     DxRequiredRule,
-    DxCompareRule,
-    DxPatternRule,
-    DxStringLengthRule,
-    DxRangeRule,
-    DxAsyncRule,
     DxButton,
     DxValidationSummary,
     DxDataGrid,
@@ -96,39 +154,87 @@ export default {
     DxSorting,
     DxSearchPanel,
     DxToast,
+    DxSelectBox,
     ModalGrid
   },
-  data() {
+  data () {
     return {
-      name: "The commoners",
+      fname: "",
+      lname: "",
+      fatherName: "",
+      region: "",
       store,
       isVisible: false,
       message: "",
       type: "success"
     };
   },
-  created() {
+  created () {
+    return fetch('http://94.228.115.6:5000/api/v1/courts')
+      .then((response) => {
+        return response.json();
+      })
+      .then(({ data }) => {
+        store.regions = data
+      });
     this.$nextTick(() => {
+      // console.log(this.store.regions.load())
       // console.log(this.store.historyQueries1.load());
     });
   },
+  computed: {},
   methods: {
-    openPopUp(e) {
-      if (e.data.status === "Готово") {
-        this.store.selectQuery = new DataSource({
-          key: "id",
-          load() {
-            return e.data.data;
+    handleSubmit (e) {
+      if (e.validationGroup.validate().isValid) {
+        fetch(`http://94.228.115.6:5000/api/v1/collect?fio=${this.lname} ${this.fname} ${this.fatherName}&region=${this.region}`)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            let reportHistory = JSON.parse(localStorage.getItem('reportHistory'))
+            if (reportHistory == null) {
+              reportHistory = JSON.stringify([data])
+              localStorage.setItem('reportHistory', reportHistory)
+            } else {
+              reportHistory.push(data)
+              localStorage.setItem('reportHistory', JSON.stringify(reportHistory))
+            }
+            this.store.historyQueries.reload()
+          });
+      }
+    },
+    checkOnComplete (e) {
+      fetch(`http://94.228.115.6:5000/api/v1/check?id=${e.data.task_id}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then(({ data }) => {
+          if (data.every(element => element.status === "SUCCESS")) {
+            this.openPopUp(e.data.task_id)
+          } else {
+            this.isVisible = true;
+            this.message = "Выбранный отчет еще не выполнен";
+            this.type = "warning";
+            setTimeout(() => { this.isVisible = false }, 3000)
           }
         });
-        this.store.showPopUp = true;
-      } else {
-        this.isVisible = true;
-        this.message = "Выбранный отчет еще не выполнен";
-        this.type = "warning";
-        setTimeout(()=>{this.isVisible = false},3000)
-      }
-    }
+    },
+    openPopUp (task_id) {
+      fetch(`http://94.228.115.6:5000/api/v1/result?id=${task_id}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then(({ data }) => {
+          this.store.selectQuery = new DataSource({
+            key: "id",
+            load () {
+              return data;
+            }
+          });
+          this.store.selectQuery.reload()
+          this.store.showPopUp = true;
+        })
+    },
   }
 };
 </script>

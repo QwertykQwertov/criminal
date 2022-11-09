@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
         <a
@@ -87,6 +87,7 @@ export default {
     },
     changeLocation (route) {
       if (this.$router.currentRoute.path != route) this.$router.push(route)
+      this.$emit('closeMenu')
     }
   }
 };
@@ -94,6 +95,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "materialize-css/dist/css/materialize.min.css";
+.navbar-fixed{
+  z-index: 1505 !important;
+}
 .brand-logo {
   cursor: pointer;
 }

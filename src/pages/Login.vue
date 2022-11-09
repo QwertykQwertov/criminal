@@ -85,33 +85,33 @@ export default {
     DxValidationSummary
   },
   name: "Header",
-  data() {
+  data () {
     return {
       email: "",
       password: "",
       store,
     };
   },
-  created() {
+  created () {
     document.title = "Суды - Вход";
   },
   methods: {
-    handleSubmit(e) {
-      if(e.validationGroup.validate().isValid){
+    handleSubmit (e) {
+      if (e.validationGroup.validate().isValid) {
         fetch('https://636916d028cd16bba714a6fd.mockapi.io/api/v1/users')
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          data.forEach(element => {
-            if (element.email == this.email && element.password == this.password){
-              this.store.authorization = true
-              this.store.user = element
-              this.$router.push('/cabinet')
-              // dxToast
-            }
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            data.forEach(element => {
+              if (element.email == this.email && element.password == this.password) {
+                this.store.authorization = true
+                this.store.user = element
+                if (this.$router.currentRoute.path != '/cabinet') this.$router.push('/cabinet')
+                // dxToast
+              }
+            });
           });
-        });
       }
     }
   }
