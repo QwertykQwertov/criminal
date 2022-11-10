@@ -155,7 +155,9 @@ export default {
     return {
       msg: 'The commoners'
     }
-  }
+  },created(){
+    document.title = 'Суды - Политика конфиденциальности'
+  },
 }
   </script>
   <<style scoped>
@@ -163,13 +165,13 @@ export default {
     /* margin-top:0; */
     padding: 2%;
     height: auto;
-    background: url(../assets/pale-taupe-scratch-lines.png);
+    /* background: url(../assets/pale-taupe-scratch-lines.png); */
   }
   .policy_container{
     padding:2%;
     text-align:left;
     border: 8px solid #4b381f63;
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255,255,255,0.5);
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
