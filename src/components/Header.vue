@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     showAccount () {
-      this.$emit('openMenu')
+      this.$emit('toggleMenu')
       // this.store.openState = true
     },
     changeLocation (route) {

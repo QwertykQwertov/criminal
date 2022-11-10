@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <Header @openMenu="openLeftMenu" @closeMenu="closeLeftMenu"/>
+    <Header
+      ref="nav"
+      @toggleMenu="toggleLeftMenu"
+      @closeMenu="closeLeftMenu"
+    />
     <DxDrawer
       ref="leftMenu"
       opened-state-mode="overlap"
@@ -10,15 +14,25 @@
       template="listMenu"
     >
       <template #listMenu>
-        <NavigationList @close="closeLeftMenu"/>
+        <NavigationList @close="closeLeftMenu" />
       </template>
 
-        <div id="content">
-          <router-view />
+      <div id="content">
+        <DxScrollView
+          id="scrollview"
+          ref="scrollViewWidget"
+          :scroll-by-content="true"
+          :scroll-by-thumb="true"
+          show-scrollbar="onScroll"
+        >
+          <div class="text-content">
+            <router-view />
+            <Footer />
+          </div>
+        </DxScrollView>
 
-        </div>
+      </div>
     </DxDrawer>
-    <Footer />
   </div>
 </template>
 
@@ -28,6 +42,8 @@ import Footer from "./components/Footer.vue"
 import DxDrawer from "devextreme-vue/drawer"
 import NavigationList from "./components/NavigationList.vue"
 
+import { DxScrollView } from 'devextreme-vue/scroll-view';
+
 import store from "./store"
 
 export default {
@@ -36,6 +52,7 @@ export default {
     Header,
     Footer,
     DxDrawer,
+    DxScrollView,
     NavigationList
   },
   data () {
@@ -43,12 +60,29 @@ export default {
       store,
     }
   },
+  created () {
+    this.$nextTick(() => {
+      const drawer = app.querySelector('.dx-drawer')
+      drawer.style.height = document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight + 'px'
+      scrollview.style.height = drawer.style.height
+      console.dir(drawer,"DRAW")
+      console.log(this.$refs.nav.$el.offsetHeight, document.documentElement.clientHeight)
+    })
+  },
+  computed: {
+    clientHeight () {
+      this.$nextTick(() => {
+        console.log(document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight)
+        return document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight + 'px'
+      })
+    }
+  },
   methods: {
-    openLeftMenu () {
-      this.$refs.leftMenu.$_instance.show()
+    toggleLeftMenu () {
+      this.$refs.leftMenu.$_instance.toggle()
       // console.log()
     },
-    closeLeftMenu(){
+    closeLeftMenu () {
       this.$refs.leftMenu.$_instance.hide()
     }
   }
@@ -66,8 +100,9 @@ body {
   /* text-align: center; */
   /* color: #2c3e50; */
 
-  height: auto;
-  min-height: 100vh;
+  /* /* height: auto; */
+  /* min-height: 100vh;  */
+  height: 100vh;
   background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.8)),
     url(./assets/femida.jpg);
   background-position: top;
@@ -79,6 +114,6 @@ body {
 }
 .dx-drawer-overlap.dx-drawer-left .dx-drawer-wrapper,
 .dx-drawer-overlap.dx-drawer-right .dx-drawer-wrapper {
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 </style>
