@@ -1,6 +1,7 @@
 import DataSource from "devextreme/data/data_source";
 
 const store = {
+  navHeight: null,
   showPopUp: false,
   authorization: false,
   user: {},

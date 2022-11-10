@@ -19,7 +19,6 @@
           <li>
             <a @click="changeLocation('/policy')">Политика конфиденциальности</a>
           </li>
-          <li><a @click="changeLocation('/about')">О проекте</a></li>
           <template v-if="store.authorization">
             <li><a @click="showAccount">Профиль</a></li>
             <li><a @click="changeLocation('/cabinet')">Кабинет</a></li>
@@ -43,10 +42,6 @@
           class="sidenav-close"
         >Политика конфиденциальности</a>
       </li>
-      <li><a
-          @click="changeLocation('/about')"
-          class="sidenav-close"
-        >О проекте</a></li>
       <li><a
           @click="changeLocation('/login')"
           class="sidenav-close"
@@ -95,7 +90,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "materialize-css/dist/css/materialize.min.css";
-.navbar-fixed{
+.navbar-fixed {
   z-index: 1505 !important;
 }
 .brand-logo {

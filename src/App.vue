@@ -62,21 +62,19 @@ export default {
   },
   created () {
     this.$nextTick(() => {
+      this.store.navHeight = this.$refs.nav.$el.offsetHeight
       const drawer = app.querySelector('.dx-drawer')
-      drawer.style.height = document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight + 'px'
+      drawer.style.height = document.documentElement.clientHeight - this.store.navHeight + 'px'
       scrollview.style.height = drawer.style.height
-      console.dir(drawer,"DRAW")
-      console.log(this.$refs.nav.$el.offsetHeight, document.documentElement.clientHeight)
     })
   },
-  computed: {
-    clientHeight () {
-      this.$nextTick(() => {
-        console.log(document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight)
-        return document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight + 'px'
-      })
-    }
-  },
+  // computed: {
+  //   clientHeight () {
+  //     this.$nextTick(() => {
+  //       return document.documentElement.clientHeight - this.$refs.nav.$el.offsetHeight + 'px'
+  //     })
+  //   }
+  // },
   methods: {
     toggleLeftMenu () {
       this.$refs.leftMenu.$_instance.toggle()
